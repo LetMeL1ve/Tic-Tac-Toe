@@ -4,9 +4,9 @@
 
 const int field_size = 3;
 char field[field_size][field_size] = { // Array that represents a game field.
-    {'1', '2', '3'},
-    {'4', '5', '6'},
-    {'7', '8', '9'}
+    {' ', ' ', ' '},
+    {' ', ' ', ' '},
+    {' ', ' ', ' '}
 };
 bool is_x_playing = false;
 
@@ -15,8 +15,6 @@ void print_field();
 bool check_field();
 
 void player_move();
-
-char get_number_as_char();
 
 int main()
 {
@@ -28,13 +26,15 @@ int main()
 }
 
 void print_field() { // Method that prints formated field to standart output.
-    const std::string horizontal_sep = "\n-------------\n", vertical_sep = " | "; // Separation symbols defined.
+    const std::string horizontal_sep = "\n-----------------\n", vertical_sep = " | "; // Separation symbols defined.
 
     std::cout << horizontal_sep;
-    for (int y = 0; y != std::size(field); ++y) {
-        for (int x = 0; x != std::size(field); ++x) {
-            if (x % 3 == 0)
-                std::cout << "| "; 
+    std::cout << "| / | 0 | 1 | 2 |";
+    std::cout << horizontal_sep;
+    for (int y = 0; y != field_size; ++y) {
+        std::cout << "| " << y << vertical_sep;
+        for (int x = 0; x != field_size; ++x) {
+                
             std::cout << field[y][x] << vertical_sep;
         }
         std::cout << horizontal_sep;
@@ -42,22 +42,21 @@ void print_field() { // Method that prints formated field to standart output.
 }
 
 bool check_field() { // Returns false if someone wins.
-    if (field[0][0] == field[0][1] && field[0][2] == field[0][1])
+    if (field[0][0] == field[0][1] && field[0][2] == field[0][1] && field[0][0] != ' ')
     return false;
-    else if (field[1][0] == field[1][1] && field[1][2] == field[1][1])
+    else if (field[1][0] == field[1][1] && field[1][2] == field[1][1]  && field[1][0] != ' ')
     return false;
-    else if (field[2][0] == field[2][1] && field[2][2] == field[2][1])
+    else if (field[2][0] == field[2][1] && field[2][2] == field[2][1]  && field[2][0] != ' ')
     return false;
-    else if (field[0][0] == field[1][1] && field[2][2] == field[1][1])
+    else if (field[0][0] == field[1][1] && field[2][2] == field[1][1]  && field[0][0] != ' ')
     return false;
-    else if (field[0][2] == field[1][1] && field[2][0] == field[1][1])
+    else if (field[0][2] == field[1][1] && field[2][0] == field[1][1]  && field[0][2] != ' ')
     return false;
     return true;
 }
-char get_number_as_char() { // Helping method for getting valid number form standart input.
-    char number;
+int get_number() { // Helping method for getting valid number form standart input.
+    int number;
     while (true) {
-        std::cout << "Enter number:";
         if (std::cin >> number)
             return number;
         std::cin.clear();
@@ -65,14 +64,15 @@ char get_number_as_char() { // Helping method for getting valid number form stan
     }
 }
 void player_move() { // Method that update field.
-    char number = get_number_as_char();
-    for (int y = 0; y != std::size(field); ++y) {
-        for (int x = 0; x != std::size(field); ++x) {
-            if ((char)field[y][x] == (char)number) {
-                field[y][x] = is_x_playing ? 'X' : 'O';
-                is_x_playing = !is_x_playing; // Reverse playing sides.
-                return;
-            }
-        }
+    while (true) {
+        std::cout << "Enter coordinates [y, x]:";
+        int y = get_number();
+        int x = get_number();
+        if (field[y][x] == ' ') {
+            field[y][x] = is_x_playing ? 'X' : 'O';
+            is_x_playing = !is_x_playing;
+            return;
+        } else
+            std::cout << "Try again.\n";
     }
 }
