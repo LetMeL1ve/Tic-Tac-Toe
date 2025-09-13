@@ -1,5 +1,8 @@
 #include "main_game_logic.h"
 
+/*
+* The main file.
+*/
 int main()
 {
     MGL::field_t field {};

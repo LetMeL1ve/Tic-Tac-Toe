@@ -1,5 +1,8 @@
 #include "main_game_logic.h"
 
+/*
+* Header file of main logic.
+*/
 
 namespace MGL
 {
@@ -22,22 +25,26 @@ namespace MGL
 
     int check_field(const field_t& field) { // Returns -1 if X wins, returns 1 if O wins else returns 0.
         bool result;
+        // Horizontal check
         if (field[0][0] == field[0][1] && field[0][2] == field[0][1] && field[0][0] != ' ')
         result = true;
         else if (field[1][0] == field[1][1] && field[1][2] == field[1][1]  && field[1][0] != ' ')
         result = true;
         else if (field[2][0] == field[2][1] && field[2][2] == field[2][1]  && field[2][0] != ' ')
         result = true;
+        // Diagonal check
         else if (field[0][0] == field[1][1] && field[2][2] == field[1][1]  && field[0][0] != ' ')
         result = true;
         else if (field[0][2] == field[1][1] && field[2][0] == field[1][1]  && field[0][2] != ' ')
         result = true;
+        // Vertical check
         else if (field[0][0] == field[1][0] && field[1][0] == field[2][0]  && field[1][0] != ' ')
         result = true;
         else if (field[0][1] == field[1][1] && field[1][1] == field[2][1]  && field[0][1] != ' ')
         result = true;
         else if (field[0][2] == field[1][2] && field[1][2] == field[2][2]  && field[0][2] != ' ')
         result = true;
+        
         return result ? (is_x_playing ? -1 : 1) : 0;
     }
 
