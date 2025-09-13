@@ -15,8 +15,5 @@ namespace MGL {
 
     int check_field(const field_t& field);
 
-    void player_move(field_t& field);
-
-    int get_number();
-    
+    bool player_move(field_t& field, int x, int y);
 }

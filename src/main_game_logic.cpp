@@ -47,28 +47,13 @@ namespace MGL
 
         return result ? (is_x_playing ? -1 : 1) : 0;
     }
-
-    int get_number() { // Helping method for getting valid number form standart input.
-        int number;
-        while (true) {
-            if (std::cin >> number)
-                return number;
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    
+    bool player_move(field_t& field, int x, int y) { // Method that update field. Returns true if it changes the field.
+        if (field[y][x] == ' ') {
+            field[y][x] = is_x_playing ? 'X' : 'O';
+            is_x_playing = !is_x_playing;
+            return true;
         }
-    }
-
-    void player_move(field_t& field) { // Method that update field.
-        while (true) {
-            std::cout << "Enter coordinates [y, x]:";
-            int y = get_number();
-            int x = get_number();
-            if (field[y][x] == ' ') {
-                field[y][x] = is_x_playing ? 'X' : 'O';
-                is_x_playing = !is_x_playing;
-                return;
-            } else
-                std::cout << "Try again.\n";
-        }
+        return false;
     }
 }
