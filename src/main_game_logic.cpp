@@ -1,7 +1,7 @@
 #include "main_game_logic.h"
 
 /*
-* Header file of main logic.
+* Source file of main logic.
 */
 
 namespace MGL
@@ -44,7 +44,7 @@ namespace MGL
         result = true;
         else if (field[0][2] == field[1][2] && field[1][2] == field[2][2]  && field[0][2] != ' ')
         result = true;
-        
+
         return result ? (is_x_playing ? -1 : 1) : 0;
     }
 
