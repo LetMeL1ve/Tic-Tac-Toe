@@ -6,8 +6,6 @@
 
 namespace MGL
 {
-    bool is_x_playing = false;
-    
     void print_field(const field_t& field) { // Method that prints formated field to standart output.
         const std::string horizontal_sep = "\n-----------------\n", vertical_sep = " | "; // Separation symbols defined.
         std::cout << horizontal_sep;
@@ -23,35 +21,48 @@ namespace MGL
         }
     }
 
-    int check_field(const field_t& field) { // Returns -1 if X wins, returns 1 if O wins else returns 0.
-        bool result;
+    int check_field(const field_t& field) { // Returns -1 if X wins, returns 1 if O wins if draw returns 2 else returns 0.
+        bool result = false;
         // Horizontal check
         if (field[0][0] == field[0][1] && field[0][2] == field[0][1] && field[0][0] != ' ')
-        result = true;
-        else if (field[1][0] == field[1][1] && field[1][2] == field[1][1]  && field[1][0] != ' ')
-        result = true;
-        else if (field[2][0] == field[2][1] && field[2][2] == field[2][1]  && field[2][0] != ' ')
-        result = true;
-        // Diagonal check
-        else if (field[0][0] == field[1][1] && field[2][2] == field[1][1]  && field[0][0] != ' ')
-        result = true;
-        else if (field[0][2] == field[1][1] && field[2][0] == field[1][1]  && field[0][2] != ' ')
-        result = true;
-        // Vertical check
-        else if (field[0][0] == field[1][0] && field[1][0] == field[2][0]  && field[1][0] != ' ')
-        result = true;
-        else if (field[0][1] == field[1][1] && field[1][1] == field[2][1]  && field[0][1] != ' ')
-        result = true;
-        else if (field[0][2] == field[1][2] && field[1][2] == field[2][2]  && field[0][2] != ' ')
-        result = true;
+        return field[0][0] == 'X' ? -1 : 1;
 
-        return result ? (is_x_playing ? -1 : 1) : 0;
+        if (field[1][0] == field[1][1] && field[1][2] == field[1][1]  && field[1][0] != ' ')
+        return field[1][0] == 'X' ? -1 : 1;
+
+        if (field[2][0] == field[2][1] && field[2][2] == field[2][1]  && field[2][0] != ' ')
+        return field[2][0] == 'X' ? -1 : 1;
+
+        // Diagonal check
+        if (field[0][0] == field[1][1] && field[2][2] == field[1][1]  && field[0][0] != ' ')
+        return field[0][0] == 'X' ? -1 : 1;
+
+        if (field[0][2] == field[1][1] && field[2][0] == field[1][1]  && field[0][2] != ' ')
+        return field[0][2] == 'X' ? -1 : 1;
+
+        // Vertical check
+        if (field[0][0] == field[1][0] && field[1][0] == field[2][0]  && field[1][0] != ' ')
+        return field[0][0] == 'X' ? -1 : 1;
+
+        if (field[0][1] == field[1][1] && field[1][1] == field[2][1]  && field[0][1] != ' ')
+        return field[0][1] == 'X' ? -1 : 1;
+
+        if (field[0][2] == field[1][2] && field[1][2] == field[2][2]  && field[0][2] != ' ')
+        return field[0][2] == 'X' ? -1 : 1;
+
+        // Draw check
+        for (size_t y = 0; y != MGL::field_size; ++y) {
+            for (size_t x = 0; x != MGL::field_size; ++x) {
+                if (field[y][x] == ' ')
+                    return 0;
+            }
+        }
+        return 2;
     }
     
     bool player_move(field_t& field, int x, int y) { // Method that update field. Returns true if it changes the field.
         if (field[y][x] == ' ') {
-            field[y][x] = is_x_playing ? 'X' : 'O';
-            is_x_playing = !is_x_playing;
+            field[y][x] = is_o_playing ? 'X' : 'O';
             return true;
         }
         return false;
