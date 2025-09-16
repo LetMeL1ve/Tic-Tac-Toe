@@ -13,7 +13,7 @@ namespace minimax {
             best_val = INT_MIN;
             for (const auto& position : get_free_cells(field)) {
                 MGL::field_t child = field;
-                child[position[0]][position[1]] = 'X';
+                child[position[0]][position[1]] = 'O';
                 int val = minimax(child, !maximaizing, depth + 1);
                 best_val = std::max(best_val, val);
             }
@@ -22,7 +22,7 @@ namespace minimax {
             best_val = INT_MAX;
             for (const auto& position : get_free_cells(field)) {
                 MGL::field_t child = field;
-                child[position[0]][position[1]] = 'O';
+                child[position[0]][position[1]] = 'X';
                 int val = minimax(child, !maximaizing, depth + 1);
                 best_val = std::min(best_val, val);
             }
@@ -37,7 +37,7 @@ namespace minimax {
         for (auto position : get_free_cells(field)) {
             MGL::field_t child = field;
             child[position[0]][position[1]] = maximaizing ? 'O' : 'X';
-            int value = minimax(child, maximaizing, 1);
+            int value = minimax(child, maximaizing, 1);    
             if (maximaizing && best_value < value) {
                 best_move = {position[0], position[1]};
                 best_value = value;

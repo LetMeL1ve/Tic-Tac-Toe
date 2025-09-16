@@ -14,15 +14,15 @@ int main()
         {{' ', ' ', ' '}}
     }};
 
-    /*std::cout << "Do you want to play VS bot? [y, n]";
+    std::cout << "Do you want to play VS bot? [y, n]";
     char choice;
     std::cin >> choice;
-    MGL::is_bot_playing = ((choice) == 'y');*/
+    MGL::is_bot_playing = ((choice) == 'y');
 
     while (MGL::check_field(field) == 0) {
         int y, x;
         if (!MGL::is_o_playing) {
-            auto best_move = minimax::get_best_move(field, !MGL::is_o_playing);
+            auto best_move = minimax::get_best_move(field, MGL::is_o_playing);
             y = best_move.first;
             x = best_move.second;
         } else {
