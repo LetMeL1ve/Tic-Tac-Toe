@@ -44,6 +44,9 @@ namespace minimax {
             } else if (!maximaizing && best_value > value) {
                 best_move = {position[0], position[1]};
                 best_value = value;
+            } else if (best_value == value && get_rand() == 1) { // Added to randomize game a bit.
+                best_move = {position[0], position[1]};
+                best_value = value;
             }
         }
         return best_move;
@@ -61,5 +64,13 @@ namespace minimax {
             }
         }
         return result;
+    }
+
+    // Function that returns 0 or 1.
+    int get_rand() {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist(0, 1);
+        return dist(gen);
     }
 }
